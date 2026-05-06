@@ -75,3 +75,12 @@ export default {
     return new Response('POUPAX API Online', { status: 200 });
   }
           }
+if (path === '/cadastro' && request.method === 'POST') {
+  const { uid, nome, email } = await request.json();
+  
+  await env.DB.prepare(
+    "INSERT OR IGNORE INTO clientes (uid, nome, email) VALUES (?1, ?2, ?3)"
+  ).bind(uid, nome, email).run();
+  
+  return Response.json({ ok: true });
+}
